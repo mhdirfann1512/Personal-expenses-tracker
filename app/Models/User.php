@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function note()
+    {
+        return $this->hasOne(Note::class);
+    }
 }

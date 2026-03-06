@@ -26,6 +26,9 @@ Route::get('/analysis', [AnalysisController::class, 'index'])
     ->middleware(['auth'])
     ->name('analysis');
 
+Route::post('/notes/update', [App\Http\Controllers\NoteController::class, 'update'])
+    ->name('notes.update');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

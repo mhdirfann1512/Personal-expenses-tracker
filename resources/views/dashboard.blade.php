@@ -12,19 +12,27 @@
                 <div class="bg-white border-l-8 border-indigo-600 shadow-sm sm:rounded-lg p-6">
                     <div class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Perbelanjaan</div>
                     <div class="mt-3 text-3xl font-black text-gray-900">RM {{ number_format($totalAmount, 2) }}</div>
-                    <div class="mt-2 text-sm text-gray-500 font-medium">{{ request()->has('month') && request('month') ? date('F', mktime(0, 0, 0, request('month'), 1)) : 'Sepanjang Masa' }}</div>
+                    <div class="mt-2 text-sm text-gray-500 font-medium">{{ request()->has('month') && request()->month ? date('F', mktime(0, 0, 0, request('month'), 1)) : 'Sepanjang Masa' }}</div>
                 </div>
 
                 <div class="bg-white border-l-8 border-green-500 shadow-sm sm:rounded-lg p-6">
                     <div class="text-xs font-bold text-gray-400 uppercase tracking-widest">Bil. Transaksi</div>
                     <div class="mt-3 text-3xl font-black text-gray-900">{{ $expenses->count() }}</div>
-                    <div class="mt-2 text-sm text-gray-500 font-medium">{{ request()->has('month') && request('month') ? 'Rekod bulan ' . date('F', mktime(0, 0, 0, request('month'), 1)) : 'Jumlah keseluruhan' }}</div>
+                    <div class="mt-2 text-sm text-gray-500 font-medium">{{ request()->has('month') && request()->month ? 'Rekod bulan ' . date('F', mktime(0, 0, 0, request('month'), 1)) : 'Jumlah keseluruhan' }}</div>
                 </div>
 
-                <div class="bg-indigo-600 shadow-sm sm:rounded-lg p-6 text-white">
-                    <div class="text-xs font-bold text-indigo-100 uppercase tracking-widest">Tips Bijak</div>
-                    <div class="mt-3 text-lg font-bold">Jejak perbelanjaan</div>
-                    <div class="mt-1 text-xs text-indigo-100">Simpan resit untuk audit bulanan yang lebih mudah.</div>
+                <div class="bg-yellow-100 shadow-sm sm:rounded-lg p-6 border-l-8 border-yellow-400">
+                    <form action="{{ route('notes.update') }}" method="POST">
+                        @csrf
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="text-xs font-bold text-yellow-700 uppercase tracking-widest">Catatan Peribadi</div>
+                            <button type="submit" class="text-xs font-bold text-yellow-800 hover:underline">Simpan</button>
+                        </div>
+                        
+                        <textarea name="content" 
+                                class="w-full h-24 p-2 text-sm bg-yellow-50 border-yellow-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500" 
+                                placeholder="Tulis nota di sini...">{{ auth()->user()->note->content ?? '' }}</textarea>
+                    </form>
                 </div>
             </div>
 
