@@ -32,18 +32,36 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $user = \App\Models\User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // --- KOD BARU MULA KAT SINI ---
+        $defaultCategories = [
+            ['name' => 'Makanan', 'color' => '#ef4444'],
+            ['name' => 'Transport', 'color' => '#3b82f6'],
+            ['name' => 'Bil & Utiliti', 'color' => '#f59e0b'],
+            ['name' => 'Hiburan', 'color' => '#10b981'],
+            ['name' => 'Lain-lain', 'color' => '#6b7280'],
+        ];
 
-        Auth::login($user);
+        foreach ($defaultCategories as $cat) {
+            \App\Models\Category::create([
+                'user_id' => $user->id,
+                'name' => $cat['name'],
+                'color' => $cat['color']
+            ]);
+        }
+        // --- KOD BARU TAMAT ---
+
+        event(new \Illuminate\Auth\Events\Registered($user));
+
+        \Illuminate\Support\Facades\Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
     }
