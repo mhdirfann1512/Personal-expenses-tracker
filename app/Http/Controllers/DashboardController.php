@@ -28,11 +28,16 @@ class DashboardController extends Controller
             }
 
             // 3. Filter Bulan & Tahun
-            if ($month) {
-                $query->whereMonth('spent_at', $month);
+            if ($request->has('month') && $request->month != '') {
+                $query->whereMonth('spent_at', $request->month);
             }
-            $query->whereYear('spent_at', $year);
 
+            // Hanya filter tahun kalau user ada pilih tahun kat dropdown/URL
+            // Kalau tak pilih (default dashboard), dia tunjuk semua
+            if ($request->has('year') && $request->year != '') {
+                $query->whereYear('spent_at', $request->year);
+            }
+            
             // 4. Sorting & Get Data
             $expenses = $query->orderBy($sortBy, $sortOrder)->get();
 
