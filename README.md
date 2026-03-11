@@ -1,6 +1,6 @@
 ## Preview Project
 
-![Homepage](screenshots/homepage.png)
+![Homepage](screenshot/register page.png)
 
 
 
