@@ -1,7 +1,7 @@
 ## Preview Project
 
 ![Homepage](screenshot/home.png)
-![Homepage](/login.png)
+![Homepage](screenshot/login.png)
 ![Homepage](screenshot/register.png)
 ![Homepage](screenshot/dashboard1.png)
 ![Homepage](screenshot/dashboard2.png)
