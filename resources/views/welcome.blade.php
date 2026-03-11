@@ -33,7 +33,7 @@
     </main>
 
     <footer class="mt-20 py-10 text-center text-gray-400 text-sm">
-        &copy; 2026 Financial Tracker. Dibina dengan Laravel & Tailwind.
+        &copy; 2026 FINTRACK. by irfan
     </footer>
 
 </body>
